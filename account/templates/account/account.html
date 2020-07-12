@@ -1,0 +1,45 @@
+{%extends  'base.html' %}
+
+
+{% block content %}
+
+<hr>
+<div  style="background-color: white; margin-top:1px ">
+<div style="display: flex; padding-top:15px;">
+    
+<hr>
+  
+    <div>
+
+ 
+        {% if user.is_authenticated %}
+        Username:
+        <h1>{{ user.username }}</h1><hr>
+       Name:
+        <h3>{{ user.FullName }}</h3><hr>
+        Email:
+        <h3>{{ user.email}}</h3><hr>
+        Age:
+        <h3>{{user.age}}</h3><hr>
+       
+        {% endif %}
+
+    </div>
+
+    <div>
+        orders: {% for item in order %}
+
+        {{ item.product }}<br>
+        <img src="{{item.product.image.url}}"><br>
+        {{item.product.name}}<br>
+        {{item.product.price}}<br>
+        <hr>
+        {% endfor %}
+    </div>
+
+    
+    <a href="{% url 'profile_update' user.id %}"><h3><strong>update profile</strong></h3></a>
+  
+</div>
+</div>
+{% endblock%}

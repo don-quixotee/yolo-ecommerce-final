@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+login
+{% endblock %}
+{% block content %}
+
+
+
+
+
+<div class="col-12">
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-12 mt-3 text-center text-uppercase">
+            <h2>Login</h2>
+        </div>
+    </div>
+
+    <main class="row">
+        <div class="col-lg-4 col-md-6 col-sm-8 mx-auto bg-white py-3 mb-4">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Log-in</h1>
+                    {% if form.errors %}
+                    <p>
+                        Your username and password didn't match.
+                        Please try again.
+                    </p>
+                    {% else %}
+                    <p>Please, use the following form to log-in. If you don't have an
+                        account <a href="{% url 'signUp' %}">register here</a></p>
+                    {% endif %}
+                    <form action="{% url 'login' %}" method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ next }}" />
+                        <p><input type="submit" value="Log-in"></p>
+                    </form>
+                    <p class="forget-password"><a href="{% url "password_reset" %}">Forgotten your password?</a></ p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- Main Content -->
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="form-auth">
+    <div style="padding-top: 2%; padding-bottom:2%;" class=" login-form">
+        <form method="POST" enctype='multipart/form-data' >
+            {{form.groups.label}}<br>
+            {{form.groups}}<br>
+            {{form.username.label}}<br>
+            {{form.username}}<br>
+            {{form.FullName.label}}<br>
+            {{form.FullName}}<br>
+            {{form.age.label}}<br>
+            {{form.age}}<br>
+            {{form.email.label}}<br>
+            {{form.email}}<br>
+          
+
+            {% csrf_token %}
+            <input class="btn btn-dark" type="submit" value="update">
+        </form>
+    </div>
+</div>
+{% endblock %}

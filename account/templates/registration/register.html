@@ -1,0 +1,48 @@
+{%extends  'base.html' %}
+
+
+{% block content %}
+
+<div class="col-12">
+    <!-- Main Content -->
+    <div class="row">
+        <div class="col-12 mt-3 text-center text-uppercase">
+            <h2>Register</h2>
+        </div>
+    </div>
+
+    <main class="row">
+        <div class="col-lg-4 col-md-6 col-sm-8 mx-auto bg-white py-3 mb-4">
+            <div class="row">
+                <div class="col-12">
+                   
+                    <form method="POST">
+                        {% csrf_token %}
+                    
+                        {{form.username.label}}<br>
+                        {{form.username}}<br>
+                        {{form.email.label}}<br>
+                        {{form.email}}<br>
+                        {{form.password1.label}}<br>
+                        {{form.password1}}<br>
+                        {{form.password2.label}}<br>
+                        {{form.password2}}<br>
+                       
+                        {{form.errors}}
+                    
+                        <input type="submit" value="submit">
+                    </form>
+
+                    <p>Already a user? click  <a style="background-color:black; color:white; padding:1px;"  href="{% url 'login' %}">login </a> to log-in </p>
+
+                    
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- Main Content -->
+</div>
+{% endblock%}
+
+

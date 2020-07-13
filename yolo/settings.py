@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'payment',
     'search',
     'coupons',
+    'recommendations',
 
 
 

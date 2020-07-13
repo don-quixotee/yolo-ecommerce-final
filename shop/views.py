@@ -7,6 +7,8 @@ from .forms import ReviewForm
 from  django.db.models import Avg
 from django.contrib import auth
 from django.http import HttpResponseRedirect
+from recommendations.recommender import Recommender
+
 
 
 
@@ -50,10 +52,10 @@ class ProductDetailView(FormMixin, DetailView):
         context['productReview'] = productReview
         r_count = Review.objects.filter(product=product).count()
         context['r_count']=r_count
-        print(product.category)
+        r = Recommender()
 
-        product_by_cat = Product.objects.filter(category=product.category)[:4]
-        context['product_by_cat']=product_by_cat
+        recommended_products  = r.suggest_products_for([product], 4)
+        context['recommendations']=recommended_products
 
         return context
 

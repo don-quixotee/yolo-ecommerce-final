@@ -1,10 +1,17 @@
 from django.db import models
 from shop.models import Product
 from django.contrib.auth import get_user_model
+from decimal import Decimal
+from django.core.validators import MinValueValidator, MaxValueValidator
+from coupons.models import Coupon
 
 
 # Create your models here.
 class Order(models.Model):
+
+
+    coupon = models.ForeignKey(Coupon,related_name='orders',null=True,blank=True,on_delete=models.SET_NULL)
+    discount = models.IntegerField(default=0,validators=[MinValueValidator(0),MaxValueValidator(100)])
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -24,8 +31,13 @@ class Order(models.Model):
     def __str__(self):
         return f'order {self.id}'
 
+    # def get_total_cost(self):
+    #     return sum(item.get_cost() for item in self.items.all())
+
+
     def get_total_cost(self):
-        return sum(item.get_cost() for item in self.items.all())
+        total_cost = sum(item.get_cost() for item in self.items.all())
+        return total_cost - total_cost *(self.discount / Decimal(100))
 
     
 

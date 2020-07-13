@@ -106,9 +106,11 @@
                                             <img  src="{{product.image.url}}" class="img-fluid" height="200px" width="200px">
                                         </a>
                                     </div>
+                                    
                                     <div class="col-12 mb-3">
+                                        <hr>
                                         <a href="{% url 'product-detail' product.id  %}"
-                                            class="product-name">{{product.name}}</a>
+                                            class="product-name">{{product.name|truncatewords:8}}</a>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <span class="product-price-old">

@@ -4,6 +4,7 @@ from django.views.generic.edit import FormMixin
 from .models import Product, ProductImage, Category, Review, Wishlist
 from cart.forms import CartAddProductForm
 from .forms import ReviewForm
+from  django.db.models import Avg
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 
@@ -43,9 +44,16 @@ class ProductDetailView(FormMixin, DetailView):
         product = self.get_object()
         pic = ProductImage.objects.filter(product=product)
         context['pictures']=pic
-        productReview = Review.objects.filter(product=product)[:3]
+        productReview = Review.objects.filter(product=product).order_by('-rating')[:3]
+        avg_rating = productReview.aggregate(Avg('rating'))
+        context['avg_rating'] = avg_rating.get('rating__avg')
         context['productReview'] = productReview
+        r_count = Review.objects.filter(product=product).count()
+        context['r_count']=r_count
+        print(product.category)
 
+        product_by_cat = Product.objects.filter(category=product.category)[:4]
+        context['product_by_cat']=product_by_cat
 
         return context
 

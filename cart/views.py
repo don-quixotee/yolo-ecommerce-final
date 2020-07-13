@@ -5,6 +5,8 @@ from shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
 from django.urls import reverse_lazy, reverse
+from coupons.forms import CouponApplyForm
+
 
 
 @require_POST
@@ -34,4 +36,8 @@ def cart_detail(request):
     cart = Cart(request)
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],'override': True})
-    return render(request, 'shop/cart.html', {'cart': cart})
+
+    coupon_apply_form = CouponApplyForm()
+
+
+    return render(request, 'shop/cart.html', {'cart': cart, 'coupon_apply_form':coupon_apply_form})

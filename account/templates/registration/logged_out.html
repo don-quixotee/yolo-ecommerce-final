@@ -1,4 +1,59 @@
 {% extends "base.html" %}
+{% block title %}
+Thank you
+{% endblock %}
+
+{% block extracss %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Roboto">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+<style>
+   
+   
+    .hr{
+        padding: 5%;
+        border-radius: 100px;
+        border: 1px solid grey;
+        background-color: snow;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div style="width: 100%; padding:5%">
+    <div class="hr" style="text-align: center; color:black">
+        <i class="fa fa-check-circle-o bigger-size " aria-hidden="true"></i>
+      
+        <h1>Thank you visiting..</h1>
+        <p style="font-size: large;">You have been successfully logged out.
+
+        </p>
+
+
+        <p > you can <a href="{% url 'login' %}">    <button class="btn btn-outline-dark">login</button>
+        </a></p>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %}
+{% extends "base.html" %}
 {% block title %}Logged out{% endblock %}
 {% block content %}
 <div class="form-auth">
@@ -11,3 +66,5 @@ You can <a href="{% url "login" %}">log-in again</a>.
     </div>
 </div>
 {% endblock %}
+
+{% endcomment %}

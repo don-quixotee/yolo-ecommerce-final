@@ -2,8 +2,34 @@
 {% block title %}
 Thank you
 {% endblock %}
+
+{% block extracss %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Roboto">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+<style>
+   
+   
+    .hr{
+        padding: 5%;
+        border-radius: 100px;
+        border: 1px solid grey;
+        background-color: snow;
+    }
+</style>
+{% endblock %}
 {% block content %}
-<h1>Thank you</h1>
-<p>Your order has been successfully completed. Your order number is
-<strong>{{ order.id }}</strong>.</p>
+<div style="width: 100%; padding:5%">
+    <div class="hr" style="text-align: center; color:black">
+        <i class="fa fa-check-circle-o bigger-size " aria-hidden="true"></i>
+      
+        <h1>Thank you</h1>
+        <p style="font-size: large;">Your order has been successfully completed.<br> Your order number is
+        <h4><strong>{{ order.id }}</strong></h4></p>
+    
+        <a href="{% url 'home' %}">    <button class="btn btn-outline-dark">continue shopping..</button>
+        </a>
+    </div>
+</div>
 {% endblock %}

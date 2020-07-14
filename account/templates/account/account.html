@@ -1,45 +1,141 @@
-{%extends  'base.html' %}
+{% extends 'base.html' %}
+{% block extracss %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@300&display=swap');
+
+    body {
+        background-color: #eaeaea;
+    }
+
+    .container {
+        font-family: 'Overpass', sans-serif;
+
+
+
+    }
+
+    #formID {
+        background-color: white;
+        margin-top: 3%;
+        margin-bottom: 5%;
+
+    }
+
+
+    #username {
+        margin-top: 2%;
+
+    }
+
+    #email {}
+
+    #bio {
+        margin-bottom: 4%;
+
+    }
+
+
+
+    .main-d{
+        width: 100%;
+       padding-left: 10%;
+       padding-right: 10%;
+       margin-bottom: 5%;
+       margin-top: 5px;
+       background-color: white;
+    }
+
+    @media (max-width: 600px) {
+
+        #username {
+            margin-top: 5%;
+            text-align: justify;
+        }
+
+        #email {
+            text-align: justify;
+        }
+
+        #bio {
+            margin-top: 6%;
+            padding-top: 6%;
+            text-align: justify;
+        }
+
+        .rounded-circle {
+            margin-top: 2%;
+        }
+
+        .main-d{
+            width: 100%;
+           padding-left: 5%;
+           padding-right: 5%;
+        }
+    }
+
+
+  
+</style>
+{% endblock  %}
 
 
 {% block content %}
-
 <hr>
-<div  style="background-color: white; margin-top:1px ">
-<div style="display: flex; padding-top:15px;">
-    
-<hr>
-  
-    <div>
-
- 
-        {% if user.is_authenticated %}
-        Username:
-        <h1>{{ user.username }}</h1><hr>
-       Name:
-        <h3>{{ user.FullName }}</h3><hr>
-        Email:
-        <h3>{{ user.email}}</h3><hr>
-        Age:
-        <h3>{{user.age}}</h3><hr>
-       
+<div class="main-d">
+    <div class="container">
+        {% if user.pic %}
+        <img src="{{user.pic.url}}" class="rounded-circle" width="200" height="200" alt="">
+        <br>
+        <br>
+        {% else %}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTqVg_URh9Mvrm3NYaTlCUyiM7r382ohELc1g&usqp=CAU"
+            class="rounded-circle" width="100" height="100" alt="">
+        <br>
+        <br>
         {% endif %}
-
-    </div>
-
-    <div>
-        orders: {% for item in order %}
-
-        {{ item.product }}<br>
-        <img src="{{item.product.image.url}}"><br>
-        {{item.product.name}}<br>
-        {{item.product.price}}<br>
-        <hr>
-        {% endfor %}
-    </div>
-
     
-    <a href="{% url 'profile_update' user.id %}"><h3><strong>update profile</strong></h3></a>
-  
+        <p id="username">name : {{user.username}}</p>
+        <hp id="email">email : {{user.email}} </p>
+            <hr>
+    
+            <a href="{% url 'profile_update' user.id %}"><button type="button" class="btn btn-outline-dark btn-sm"
+                    id="editprofile">Edit Profile</button></a>
+            <a href="{% url 'password_change' %}"><button type="button" class="btn btn-outline-dark btn-sm"
+                    id="editprofile">Change Password</button></a>
+    </div>
+    <hr>
+    
+    
+    
+    
+    
+    
+    <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope=" col">OrderId</th>
+        <th scope="col">Image</th>
+        <th scope="col">Product</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Price</th>
+    
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in order %}
+            <tr>
+                <th scope="row">{{item.id}}</th>
+                <td> <img src="{{item.product.image.url}}" class="img-fluid" width="70px" height="70px"></td>
+                <td>{{item.product|truncatewords:2}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 </div>
-</div>
-{% endblock%}
+
+
+
+{% endblock %}

@@ -1,52 +1,65 @@
 {% extends 'base.html' %}
+
+{% block extracss %}
+<style>
+.cart-main{
+ 
+
+     width: 100%;
+     padding-left: 10%;
+     padding-right: 10%;
+     margin-bottom: 5%;
+     margin-top: 5px;
+     background-color: white;
+
+
+}
+</style>
+{% endblock %}
 {% block content %}
+
+
+
 <hr>
-<div class="container" style="padding:3% 8% 8% 8%; background-color:white; margin-top:1px">
-    <!-- Main Content -->
-    <div class="row">
+<div class="cart-main">
+    <div class="container">
         <div class="col-12 mt-3 text-center text-uppercase">
             <h2>Shopping Cart</h2>
         </div>
     </div>
 
+    <table class="table table-striped   table-hover table-responsive-sm">
+        <thead>
+            <tr>
 
-    <div class="col-12">
-        <table style="width: 100%;" class="table table-striped   table-hover table-sm">
-            <thead>
-                <tr>
-                    <!-- <th>Product</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>Amount</th>
-                                        <th></th> -->
-                    <th>Image</th>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Remove</th>
-                    <th>Unit price</th>
-                    <th>Price</th>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Remove</th>
+                <th>Unit price</th>
+                <th>Price</th>
 
 
 
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
 
-                {% for item in cart %}
-                {% with product=item.product %}
-                <tr>
-                    <td>
-                        <img src="{{product.image.url}}" class="img-fluid">
-                    </td>
+            {% for item in cart %}
+            {% with product=item.product %}
+            <tr>
+                <td>
+                    <img src="{{product.image.url}}" class="img-fluid">
+                </td>
 
-                    <td> {{product.name|truncatewords:4}}
-                    </td>
+                <td> {{product.name|truncatewords:4}}
+                </td>
 
 
 
-                    <td>
-                        <form action="{% url "cart:cart_add" product.id %}" method="post">
-                            <div style='display:flex;''>
+                <td>
+                    <form action="{% url "cart:cart_add" product.id %}" method="post">
+                        <div style='display:flex; '>
                             {{ item.update_quantity_form.quantity }}
                         {{ item.update_quantity_form.override }}
                         <input type="submit" value="Update">
@@ -69,9 +82,7 @@
 
 
                 </td>
-                <!-- <td>
-                                            <input type="number" min="1" value="1">
-                                        </td> -->
+               
                 <td>
                     {{item.total_price}}
                 </td>
@@ -87,12 +98,7 @@
 
         </tbody>
         <tfoot>
-            <!-- <tr>
-                <th colspan="5" class="text-right"> Total</th>
-                <th>{{cart.get_total_price}}</th>
-                <th></th>
-            </tr> -->
-
+          
 
             {% if cart.coupon %}
             <tr class="subtotal">
@@ -126,6 +132,7 @@
 
         </tfoot>
     </table>
+       
 
 
     <p>Apply a coupon:</p>
@@ -134,10 +141,10 @@
 <input type="submit" value="Apply">
 {% csrf_token %}
 </form>
-</div>
+
 <hr>
 <div class="col-12 text-right">
-    <a href="{% url 'orders:order_create' %}" class="btn btn-outline-success">Checkout</a>
+    <a href="{% url 'orders:order_create' %}" class="btn btn-outline-dark">Checkout</a>
        
 </div>
 

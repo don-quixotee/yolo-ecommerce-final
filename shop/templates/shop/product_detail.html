@@ -126,6 +126,7 @@
                     <div class="col-12 product-name large">
                         {{product.name}}
                         <small>By <a href="">{{product.brand.name}}</a></small>
+                        <p >${{product.price}}</p>
                     </div>
                     <div class="col-12 px-0">
                         <hr>
@@ -242,15 +243,24 @@
                                             </div>
                                         </div>
                                     </div>
-
+{% if user.is_authenticated %}
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-outline-dark">Add Review</button>
                                     </div>
+                                    {% endif %}
                                     {% csrf_token %}
                                 </form>
                             </div>
                         </div>
                         <!-- Add Review -->
+
+                        {% if user.is_anonymous %}
+
+                        <div>
+                            <h4> <a href="{% url 'login' %}"><button class="btn btn-outline-dark">login</button></a> to write a review</h4>
+                        </div>
+
+                        {% endif %}
 
                         <div class="row">
                             <div class="col-12 px-md-3 px-0">

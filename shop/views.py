@@ -8,6 +8,7 @@ from  django.db.models import Avg
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from recommendations.recommender import Recommender
+from django.urls import reverse_lazy
 
 
 
@@ -24,6 +25,9 @@ class HomeView(ListView):
         context =  super().get_context_data(**kwargs)
         category = Category.objects.all()
         context['category']=category
+        top = Product.objects.filter(category_id = 2)[:4]
+        print(top)
+        context['top'] =top
         return context
     def get_queryset(self):
         return Product.objects.all()[:4]
@@ -76,21 +80,6 @@ class ProductDetailView(FormMixin, DetailView):
     
 
 
-# class ProductCategoryView(DetailView):
-#     model = Category
-#     context_object_name = 'products'
-#     template_name='shop/category.html'
-#     pk_url_kwarg ='id'
-
-#     def get_context_data(self,**kwargs):
-#         context= super().get_context_data(**kwargs)
-#         category = self.get_object()
-#         products = Product.objects.filter(category=category)
-#         context['products']=products
-#         return context
-
-
-
 
 class ProductListView(ListView):
     model = Product
@@ -101,12 +90,13 @@ class ProductListView(ListView):
     def get(self, request, id=None):
         product = Product.objects.all()
         category = Category.objects.all()
+        cat = None
 
 
         if id:
             cat =Category.objects.get(id=id)
             product = Product.objects.filter(category=cat)
-        context = {'products':product, 'category':category}
+        context = {'products':product, 'category':category , 'cat':cat}
         return render(request, 'shop/products.html', context)
 
 
@@ -116,10 +106,11 @@ class WishlistView(ListView):
     context_object_name = 'products'
 
 
-    def get_success_url(self):
-        return reverse_lazy('wishlist')
+    # def get_success_url(self):
+    #     return reverse_lazy('wishlist')
     
     def get(self, request, pk=None):
+        
         if pk:
             user = auth.get_user(request)
             wishlist, created = self.model.objects.get_or_create(user=user, product_id=pk)
@@ -133,7 +124,7 @@ class WishlistView(ListView):
             user = self.request.user
             user_id = user.id
             products = Wishlist.objects.filter(user=user_id)
-            return render(request, 'shop/wishlist.html', {'products':products})
+            return redirect('home')
         
 
 

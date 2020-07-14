@@ -48,11 +48,15 @@ INSTALLED_APPS = [
     'search',
     'coupons',
     'recommendations',
+    'crispy_forms',
 
 
 
 
 ]
+
+
+CRISPY_TEMPLATE_PACK='bootstrap4'
 
 
 
@@ -158,7 +162,7 @@ AUTH_USER_MODEL = "account.User"
 LOGIN_REDIRECT_URL = '/'
 
 # LOGOUT_REDIRECT_URL='/'
-LOGIN_URL = 'account/login'
+LOGIN_URL = 'login'
 
 
 # auth backend

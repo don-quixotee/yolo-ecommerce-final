@@ -1,43 +1,100 @@
 {% extends 'base.html' %}
 
+
+{% load crispy_forms_tags %}
+
+{% block extracss %}
+  <style>
+    #order{
+        background-color: rgb(82, 82, 77);
+        color: white;
+
+      margin-top: 5%;
+      padding-left: 5%;
+      padding-top: 8%;
+      margin-bottom: 5%;
+    }
+    #checkout{
+      padding-left: 5%;
+      margin-top: 5%;
+
+    }
+    .order-d{
+        background-color: white;
+        margin-top: 5%;
+        margin-left: 7%;
+        margin-right: 7%;
+        margin-bottom: 5%;
+        padding: 2%;
+    }
+    .form input{
+        width: 100%;
+    }
+  </style>
+{% endblock  %}
+
 {% block content %}
-<h1>Checkout</h1>
-<div class="order-info">
-<h3>Your order</h3>
-<ul>
-<!-- {% for item in cart %}
-<li>
-{{ item.quantity }}x {{ item.product.name }}
-<span>${{ item.total_price }}</span>
-</li>
-{% endfor %} -->
 
-<ul>
-    {% for item in cart %}
-    <li>
-    {{ item.quantity }}x {{ item.product.name }}
-    <span>${{ item.total_price|floatformat:2 }}</span>
-</li>
-{% endfor %}
-{% if cart.coupon %}
-<li>"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
-<span class="neg">- ${{ cart.get_discount|floatformat:2 }}</span>
-</li>
-{% endif %}
-</ul>
+<div class="container order-d">
+  <div class="container-fluid">    
+      <div class="row">
+          <div class="col-sm-5" id="order">
+            <h2 class="mt-2">Order Details</h2>
+            <hr class="mt-0 mb-4">
+            <h3>Your order</h3>
+            <ul>
+                {% for item in cart %}
+                <li>
+                {{ item.quantity }}x {{ item.product.name|truncatewords:4 }}
+                <span>${{ item.total_price|floatformat:2 }}</span>
+            </li>
+            {% endfor %}
+            {% if cart.coupon %}
+            <li>"{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+            <span class="neg">- ${{ cart.get_discount|floatformat:2 }}</span>
+            </li>
+            {% endif %}
 
 
-
-</ul>
-<!-- <p>Total: ${{ cart.get_total_price }}</p> -->
-<p>Total: ${{ cart.get_total_price_after_discount|floatformat:2 }}</p>
-
+            </ul>
+            <p>Total: ${{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+        </div>
+  
+          <div class="col-sm-7" id="checkout">
+              <h3 class=" ">please provide your delivery address..</h3>
+              <div class="row justify">
+                  <div class="col-8">
+                      <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <input type="submit" class='btn btn-outline-dark' value="Checkout">
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
 </div>
-
-<form method="post" class="order-form">
-{{ form.as_p }}
-<p><input type="submit" value="Place order"></p>
-{% csrf_token %}
-</form>
-
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

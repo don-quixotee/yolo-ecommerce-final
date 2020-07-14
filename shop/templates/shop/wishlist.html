@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
+
+
+{% block extracss %}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald|Roboto">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+<style>
+   
+   
+    .hr{
+        padding: 5%;
+        border-radius: 100px;
+        border: 1px solid grey;
+        background-color: snow;
+    }
+</style>
+{% endblock %}
 {% block content %}
+
+{% if user.is_authenticated %}
 
 
 <div class="col-12">
@@ -7,9 +27,14 @@
         <div class="col-12 py-3">
             <div class="row">
                 <div class="col-12 text-center text-uppercase">
-                    <h2>liked items...</h2>
+                    {%  if products %}
+                    <h2>liked items</h2>
+                    {% endif %}
                 </div>
             </div>
+
+            {% if products %}
+
             <div class="row">
                 {% for prod in products %}
                 <!-- Product -->
@@ -49,11 +74,47 @@
                 <!-- Product -->
                 {% endfor %}
 
-                <!-- Product -->
 
+                {% else %}
+                <div style="width: 100%; padding:5%">
+                    <div class="hr" style="text-align: center; color:black">
+                        <i class="fa fa-check-circle-o bigger-size " aria-hidden="true"></i>
+                      
+                        <h3> hello , {{request.user}}</h3>
+                        <h5>Your wishlist is empty ....</h5>
+                        <p> starting adding item to the wishlist</p>
+                    
+                        <a href="{% url 'home' %}">    <button class="btn btn-outline-dark">Start Adding..</button>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product -->
+{% endif %}
             </div>
         </div>
     </div>
 </div>
+
+{% else %}
+
+
+<div style="width: 100%; padding:5%">
+    <div class="hr" style="text-align: center; color:black">
+        <i class="fa fa-check-circle-o bigger-size " aria-hidden="true"></i>
+      
+        <h3> hello , {{request.user}}</h3>
+        <h5>Please login to add items to wishlist</h5>
+    
+        <a href="{% url 'login' %}">    <button class="btn btn-outline-dark">Login</button>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+{% endif %}
 
 {% endblock %}
